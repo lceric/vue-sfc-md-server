@@ -1,0 +1,36 @@
+{
+  "name": "vue-sfc-md-server",
+  "version": "1.0.0",
+  "description": "vue sfc md server",
+  "main": "index.js",
+  "scripts": {
+    "start": "node bin/www",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/lceric/vue-sfc-md-server.git"
+  },
+  "keywords": [
+    "vue",
+    "sfc",
+    "md",
+    "server"
+  ],
+  "author": "Eric",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lceric/vue-sfc-md-server/issues"
+  },
+  "homepage": "https://github.com/lceric/vue-sfc-md-server#readme",
+  "dependencies": {
+    "koa": "^2.13.1",
+    "koa-bodyparser": "^4.2.1",
+    "koa-jwt": "^3.5.1",
+    "koa-router": "^7.4.0",
+    "koa-static-cache": "^5.1.2",
+    "log4js": "^3.0.6",
+    "mysql2": "^1.6.4",
+    "sequelize": "^4.41.2"
+  }
+}
