@@ -1,0 +1,12 @@
+#app {
+  width: 1200px;
+  margin: auto;
+}
+
+.txt-right {
+  text-align: right;
+}
+
+.action-bar {
+  margin-bottom: 8px;
+}

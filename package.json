@@ -24,13 +24,18 @@
   },
   "homepage": "https://github.com/lceric/vue-sfc-md-server#readme",
   "dependencies": {
+    "await-to-js": "^2.1.1",
+    "filereader": "^0.10.3",
     "koa": "^2.13.1",
+    "koa-body": "^4.2.0",
     "koa-bodyparser": "^4.2.1",
     "koa-jwt": "^3.5.1",
     "koa-router": "^7.4.0",
+    "koa-static": "^5.0.0",
     "koa-static-cache": "^5.1.2",
     "log4js": "^3.0.6",
     "mysql2": "^1.6.4",
-    "sequelize": "^4.41.2"
+    "sequelize": "^4.41.2",
+    "vue-sfc-md": "^0.4.0"
   }
 }

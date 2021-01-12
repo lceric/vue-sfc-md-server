@@ -1,4 +1,4 @@
-## koa-template
-koa template
+## vue-sfc-md-server
+Vue SFC markdown creator server
 
-Thanks https://blog.suevily.cn/58225/
+![example gif](./docs/markdown-example.gif)

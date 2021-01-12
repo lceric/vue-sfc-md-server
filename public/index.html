@@ -1,10 +1,117 @@
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://festatic.estudy.cn/libs/vue/2.6.10/vue.js"></script>
+    <script src="https://festatic.estudy.cn/libs/element-ui/2.14.0/index.js"></script>
+    <script src="https://festatic.estudy.cn/libs/axios/0.18.0/axios.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://festatic.estudy.cn/libs/element-ui/2.14.0/theme-chalk/index.css"
+    />
+    <link rel="stylesheet" href="./styles/common.css" />
+  </head>
+  <body>
+    <div id="app">
+      <el-row :gutter="10">
+        <el-col :span="12">
+          <el-tabs v-model="tabsActive">
+            <el-tab-pane name="file" label="SFC文件">
+              <el-upload
+                class="upload-demo"
+                drag
+                action=""
+                :http-request="httpRequestHandler"
+                :auto-upload="true"
+                :show-file-list="false"
+              >
+                <i class="el-icon-upload"></i>
+                <div class="el-upload__text">
+                  将文件拖到此处，或<em>点击上传</em>
+                </div>
+                <div class="el-upload__tip" slot="tip">
+                  只能上传jpg/png文件，且不超过500kb
+                </div>
+              </el-upload>
+            </el-tab-pane>
+            <el-tab-pane name="input" label="SFC字符串">
+              <div class="action-bar txt-right">
+                <el-button type="primary" @click="transform">转化</el-button>
+              </div>
+
+              <el-input
+                type="textarea"
+                v-model="sourceStr"
+                :autosize="{ minRows: 6, maxRows: 18}"
+              ></el-input>
+            </el-tab-pane>
+          </el-tabs>
+        </el-col>
+        <el-col :span="12">
+          <h2>
+            Output Markdown
+            <el-button
+              :disabled="!mdStr"
+              type="text"
+              icon="el-icon-document"
+              @click="copyToClipboard(mdStr)"
+              >复制</el-button
+            >
+          </h2>
+          <pre>{{mdStr}}</pre>
+        </el-col>
+      </el-row>
+    </div>
+    <script>
+      new Vue({
+        data() {
+          return {
+            mdStr: '',
+            sourceStr: '',
+            tabsActive: 'input',
+          }
+        },
+        created() {
+          Vue.prototype.$ELEMENT = { size: 'mini' }
+        },
+        methods: {
+          httpRequestHandler(event) {
+            this.mdStr = ''
+            let { file } = event
+            let params = new FormData()
+            params.append('file', file)
+            axios.post('/markdown/parsedFile', params).then((res) => {
+              console.log(res)
+              this.mdStr = res.data.data
+            })
+          },
+          transform(source) {
+            this.mdStr = ''
+            if (!this.sourceStr) return this.$message.error('待转源不能为空哦')
+            let params = {
+              source: this.sourceStr,
+            }
+            axios.post('/markdown/parsed', params).then((res) => {
+              console.log(res)
+              this.mdStr = res.data.data
+            })
+          },
+          copyToClipboard(str) {
+            const el = document.createElement('textarea')
+            el.value = str
+            document.body.appendChild(el)
+            el.select()
+            let copyRes = document.execCommand('copy')
+            if (copyRes) {
+              this.$message.success('复制成功')
+            } else {
+              this.$message.error('复制出了点问题')
+            }
+            document.body.removeChild(el)
+          },
+        },
+      }).$mount('#app')
+    </script>
+  </body>
 </html>

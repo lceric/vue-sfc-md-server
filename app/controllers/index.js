@@ -14,11 +14,13 @@ for (const file of files) {
     const controller = require(`./${file}`)
     // 获取Controller中的key
     const methodsNames = Object.getOwnPropertyNames(controller.__proto__)
-    const reg = /(get_)|(post_)|(put_)|(delete_)/
-    
+    const prefix = file.replace('.js', '')
     methodsNames.forEach(function(mn) {
+      const reg = /(get_)|(post_)|(put_)|(delete_)/
+      const decReg = /(public_)|(privated_)/
+      if (typeof controller[mn] != 'function') return
       // 过滤符合路由命名的方法
-      if (reg.test(mn) && typeof controller[mn] === 'function') {
+      if (reg.test(mn)) {
         let splitArr = mn.split('_')
         let isPub = true
         isPub = splitArr.length < 3
@@ -30,7 +32,10 @@ for (const file of files) {
         console.log(controller[mn])
         let part = controllers[isPub ? 'public' : 'privated']
         part[method] = part[method] || {}
-        controllers[isPub ? 'public' : 'privated'][method][action] = controller[mn]
+        controllers[isPub ? 'public' : 'privated'][method][`${prefix}/${action}`] = controller[mn]
+      } else if (decReg.test(mn)) {
+        let [dec, fnName] = mn.split('_')
+        controllers[dec][`${prefix}/${fnName}`] = controller[mn]
       }
     })
     console.log(JSON.stringify(controllers))
