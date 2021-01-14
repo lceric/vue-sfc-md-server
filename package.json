@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node bin/www",
+    "postinstall": "patch-package",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -35,6 +36,7 @@
     "koa-static-cache": "^5.1.2",
     "log4js": "^3.0.6",
     "mysql2": "^1.6.4",
+    "patch-package": "^6.2.2",
     "sequelize": "^4.41.2",
     "vue-sfc-md": "^0.4.0"
   }
